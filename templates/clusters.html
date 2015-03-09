@@ -1,0 +1,43 @@
+
+<title>Media Clusters</title>
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='clusters.css') }}" />
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXEKY5P2jrrTF-AE5klwoBDT7ndyMBjfE">
+</script>
+<script type="text/javascript">
+    function initialize(data) {
+        var mapOptions = {
+          center: { lat: data.center.lat, lng: data.center.lng },
+          zoom: 12,
+          scrollwheel: false,
+        };
+        var map = new google.maps.Map(document.getElementById('map-canvas'),
+            mapOptions);
+
+        for (var i = 0; i < Math.min(100, data.clusters.length); i++) {
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(data.clusters[i].center.lat, data.clusters[i].center.lng),
+                map: map
+            });
+            var contentString = data.clusters[i].cluster_info;
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString,
+                maxWidth: 800
+            });
+            google.maps.event.addListener(marker, 'click', (function(marker, infowindow) {
+                return function() {
+                    infowindow.open(map, marker);
+                };
+            })(marker, infowindow));
+        }
+    }
+    google.maps.event.addDomListener(window, 'load', function() {
+        initialize({{ data|safe }});
+    });
+</script>
+
+<h3>{{ data.clusters|length }} clusters, time spent {{ data.time_spent }}s, db time spent {{ data.db_time_spent }}s</h3>
+<div id="map-canvas" class="map"></div><br>
+{% for cluster in data.clusters %}
+    <a href="{{ cluster.url }}">media cluster ({{ cluster.media_count }} media)</a><br>
+{% endfor %}
