@@ -61,6 +61,7 @@ class Clusters(Resource):
             return data
         except:
             traceback.print_exc(file=sys.stdout)
+            return 'Something is wrong! We are taking care of it!'
 
 
 api.add_resource(Clusters, '/clusters/<city>')
