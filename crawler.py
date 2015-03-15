@@ -8,7 +8,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 # from geopy.geocoders import Nominatim
 from instagram import client
 from instagram.models import ApiModel
-from pymongo import MongoClient
+from database_client import mongo_client
 from pymongo.errors import DuplicateKeyError
 
 CONFIG = {
@@ -39,9 +39,7 @@ SF_CRAWL_PARAMS = {
 
 # Instagram api client
 instagram_api = client.InstagramAPI(**CONFIG)
-# Mongodb client
-mongo_client = MongoClient('localhost', 27017)
-test_db = mongo_client.test_db
+
 # Redis client
 redis_client = redis.StrictRedis(host='localhost', port=6379, db=0)
 # Initialize a scheduler
@@ -161,8 +159,6 @@ def crawl():
 
 def crawl_by_time(start_time, end_time):
     # Get db collection.
-    test_collection = test_db.test_collection
-
     lat = SF_CRAWL_PARAMS['start_lat']
     lng = SF_CRAWL_PARAMS['start_lng']
     distance = SF_CRAWL_PARAMS['distance']
@@ -192,7 +188,7 @@ def crawl_by_time(start_time, end_time):
                             if media.link and media.link not in media_links:
                                 media_links.add(media.link)
                                 media_dict = construct_media_dict(media)
-                                test_collection.save(media_dict)
+                                mongo_client.save_media(media_dict)
                                 saved_count += 1
                                 total_saved_media += 1
                             else:

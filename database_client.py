@@ -11,6 +11,9 @@ class MongoDBClient(object):
     def insert_media(self, media):
         self.collection.insert(media)
 
+    def save_media(self, media):
+        self.collection.save(media)
+
     def search_media_by_time(self, min_timestamp, max_timestamp):
         media_results = self.collection.find({'created_time': {'$gt': min_timestamp, '$lt': max_timestamp}})
         return media_results
