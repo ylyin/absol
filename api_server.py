@@ -16,13 +16,13 @@ _CITY_CONFIGS = {
     }
 }
 
+parser = reqparse.RequestParser()
+parser.add_argument('')
+
 
 def abort_if_city_doesnt_exist(city):
     if city not in _CITY_CONFIGS:
         abort(404, message='City {0} does not exist.'.format(city))
-
-parser = reqparse.RequestParser()
-parser.add_argument('')
 
 
 class Clusters(Resource):
@@ -61,7 +61,7 @@ class Clusters(Resource):
             return data
         except:
             traceback.print_exc(file=sys.stdout)
-            return 'Something is wrong! We are taking care of it!'
+            abort(404, message='Something is wrong! The service will be back soon.')
 
 
 api.add_resource(Clusters, '/clusters/<city>')
