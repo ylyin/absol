@@ -5,8 +5,8 @@ class MongoDBClient(object):
 
     def __init__(self, address, port):
         self.client = MongoClient(address, port)
-        self.db = self.client.test_db
-        self.collection = self.db.test_collection
+        self.db = self.client.absol_db
+        self.collection = self.db.media_collection
 
     def insert_media(self, media):
         self.collection.insert(media)
@@ -30,5 +30,7 @@ class MongoDBClient(object):
         })
         return media_results
 
+INTERNAL_IP = '172.31.21.11'
+PUBLIC_IP = '54.67.80.76'
 
-mongo_client = MongoDBClient('localhost', 27017)
+mongo_client = MongoDBClient(INTERNAL_IP, 27017)

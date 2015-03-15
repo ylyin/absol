@@ -1,6 +1,6 @@
 import time
 from enum import Enum
-# from database_client import mongo_client
+from database_client import mongo_client
 from math import sqrt
 
 
@@ -144,8 +144,7 @@ def start():
     # Get all media of last 24 hours.
     now_timestamp_s = long(time.time())
     one_day_ago_timestamp_s = now_timestamp_s - 60 * 60 * 24
-    # media_results = mongo_client.search_media_by_time(one_day_ago_timestamp_s, now_timestamp_s)
-    media_results = []
+    media_results = mongo_client.search_media_by_time(one_day_ago_timestamp_s, now_timestamp_s)
     for media in media_results:
         media_cluster_builder.track_media(media)
     media_clusters = media_cluster_builder.get_clusters()
