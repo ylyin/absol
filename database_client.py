@@ -30,7 +30,7 @@ class MongoDBClient(object):
         })
         return media_results
 
-INTERNAL_IP = '172.31.21.11'
+INTERNAL_IP = '172.31.11.119'
 PUBLIC_IP = '54.67.80.76'
 
 mongo_client = MongoDBClient(INTERNAL_IP, 27017)
