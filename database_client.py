@@ -33,4 +33,4 @@ class MongoDBClient(object):
 INTERNAL_IP = '172.31.11.119'
 PUBLIC_IP = '54.67.80.76'
 
-mongo_client = MongoDBClient(PUBLIC_IP, 27017)
+mongo_client = MongoDBClient('ip-172-31-11-119', 27017)
