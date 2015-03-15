@@ -1,7 +1,7 @@
 import time
 import traceback
 import sys
-from database_client import mongo_client
+# from database_client import mongo_client
 from cluster import MediaClusterBuilder, DistanceMode
 from flask import Flask
 from flask_restful import reqparse, abort, Api, Resource
@@ -37,7 +37,8 @@ class Clusters(Resource):
             lat_range = _CITY_CONFIGS[city]['lat_range']
             lng_range = _CITY_CONFIGS[city]['lng_range']
             # Get media results from mongodb.
-            media_results = mongo_client.search_media_by_geo_and_time(lat_range, lng_range, time_range)
+            # media_results = mongo_client.search_media_by_geo_and_time(lat_range, lng_range, time_range)
+            media_results = []
             # Prepare returned data.
             data = dict()
             data['db_time_spent'] = int(time.time() - now_timestamp_s)
