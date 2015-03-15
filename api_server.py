@@ -6,8 +6,8 @@ from cluster import MediaClusterBuilder, DistanceMode
 from flask import Flask
 from flask_restful import reqparse, abort, Api, Resource
 
-app = Flask(__name__)
-api = Api(app)
+application = Flask(__name__)
+api = Api(application)
 
 _CITY_CONFIGS = {
     'sf': {
@@ -69,4 +69,4 @@ api.add_resource(Clusters, '/clusters/<city>')
 
 
 if __name__ == '__main__':
-    app.run()
+    application.run()
